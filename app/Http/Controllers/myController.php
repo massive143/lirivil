@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Pagination\Paginator;
+
 use Illuminate\Http\Request;
 use App\Table;
 use App\resource\views\app;
@@ -19,10 +21,12 @@ class myController extends Controller
     public function index()
     {
           // get all the database
-      
 
-       $tables = Table::all(); 
-      //  $tables = Table::pagination(3);
+
+      $tables = Table::all();
+     // $tables = DB::table('tables')->paginate(3);
+      //$result->tables;
+      // $result = json_decode($tables, true);
         return view('app.index', ['tables' => $tables]);
     }
 
@@ -108,7 +112,7 @@ class myController extends Controller
       return redirect('/app');
     }
 
-    public function login()
+    public function logins()
     {
           // get all the database
       
@@ -118,4 +122,12 @@ class myController extends Controller
         return view('app.login');
     }
 
+    public function users(){
+        $users = Table::paginate(3);
+        return view('app.pagination',compact('users'));
+    }
+
+    
 }
+
+

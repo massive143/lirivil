@@ -33,6 +33,7 @@
       @endforeach
 
        <td><a href="{{action('myController@create', $post['id'])}}" class="btn btn-warning">Create</a></td>
+
     </tbody>
   </table>
   </div>
