@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Table;
 use App\resource\views\app;
 use DB;
+use Laravel\Scout\Searchable;
 
 
 class myController extends Controller
@@ -23,11 +24,14 @@ class myController extends Controller
           // get all the database
 
 
-      $tables = Table::all();
-     // $tables = DB::table('tables')->paginate(3);
-      //$result->tables;
-      // $result = json_decode($tables, true);
-        return view('app.index', ['tables' => $tables]);
+     // $tables = Table::all();
+     // return view('app.index', ['tables' => $tables]);
+      
+
+
+
+      $tables = Table::paginate(3);
+        return view('app.index',compact('tables'));
     }
 
     /**
@@ -112,20 +116,24 @@ class myController extends Controller
       return redirect('/app');
     }
 
-    public function logins()
-    {
-          // get all the database
-      
-
-     
-      //  $tables = Table::pagination(3);
-        return view('app.login');
+    public function searchas(Request $request){
+        if($request->has('nama')){
+            $tables = Table::search($request->nama)
+                ->paginate(3);
+        }else{
+            $tables = Table::paginate(3);
+        }
+        return view('app.searchas',compact('tables'));
     }
 
-    public function users(){
-        $users = Table::paginate(3);
-        return view('app.pagination',compact('users'));
+    public function search(Request $request){
+        $this->validate($request,['nama'=>'required','password'=>'required']);
+
+        $tables = Table::create($request->all());
+        return back();
+
     }
+   
 
     
 }

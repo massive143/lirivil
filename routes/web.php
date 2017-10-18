@@ -19,7 +19,7 @@ Route::get('/2', function() {
 
 Route::resource('app', 'myController');
 
-
+Route::get('coDash','coDashboard@produk');
 
 Auth::routes();
 
@@ -44,3 +44,7 @@ Route::group(['middleware' => 'checklogin'], function () {
     Route::get('dashboard','coDashboard@home');
     Route::get('produk','coDashboard@produk');
 });
+
+
+Route::get('/searchas','myController@searchas');
+Route::post('/search', 'myController@search');
